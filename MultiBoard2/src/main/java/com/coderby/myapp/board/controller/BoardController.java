@@ -44,10 +44,11 @@ public class BoardController {
 	public String getListByCategory(@PathVariable int categoryId, @PathVariable int page, HttpSession session, Model model) {
 		session.setAttribute("page", page);
 		model.addAttribute("categoryId", categoryId);
-
+		//System.out.println(page);
 		List<Board> boardList = boardService.selectArticleListByCategory(categoryId, page);
 		model.addAttribute("boardList", boardList);
-
+		logger.error(boardList.toString());
+		logger.error("게시글의 수:{}",boardList.size());
 		// paging start
 		int bbsCount = boardService.selectTotalArticleCountByCategoryId(categoryId);
 		int totalPage = 0;
@@ -57,7 +58,7 @@ public class BoardController {
 		model.addAttribute("totalPageCount", totalPage);
 		model.addAttribute("page", page);
 		return "board/list";
-	}
+	}/////////
 
 	@RequestMapping("/board/cat/{categoryId}")
 	public String getListByCategory(@PathVariable int categoryId, HttpSession session, Model model) {
